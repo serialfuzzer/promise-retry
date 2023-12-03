@@ -70,6 +70,37 @@ const results = await promiseRetry(
 );
 ```
 
+
+## Example 3 -- Async/Await
+```js
+var promiseRetry = require('@chriscdn/promise-retry');
+var counter = 1;
+
+async function errorFunc(x) {
+    console.log("attempt", x)
+        if(counter==3){
+            return 3;
+        }else{
+            counter++
+            throw new Error('Err');    
+        }
+}
+
+
+async function main() {
+    
+    const results = await promiseRetry(errorFunc,
+        {
+            maxAttempts: 10,
+            retryDelay: 0,
+        }
+        );
+        console.log(results)
+}
+
+main();
+```
+
 ## License
 
 [MIT](LICENSE)
